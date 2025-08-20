@@ -39,4 +39,9 @@ public class BlogService {
         // Repository의 findAll() 메서드를 호출하면 DB의 모든 Article 객체를 List<Article> 형태로 반환함.
         // Service 계층은 조회 결과를 그대로 Controller나 다른 계층에 전달함.
     }
+
+    public Article findById(Long id) {
+        return blogRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
+    }
 }

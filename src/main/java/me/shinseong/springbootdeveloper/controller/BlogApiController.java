@@ -3,11 +3,13 @@ package me.shinseong.springbootdeveloper.controller;
 import lombok.RequiredArgsConstructor;
 import me.shinseong.springbootdeveloper.domain.Article;
 import me.shinseong.springbootdeveloper.dto.AddArticleRequest;
+import me.shinseong.springbootdeveloper.dto.ArticleResponse;
 import me.shinseong.springbootdeveloper.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -26,6 +28,29 @@ public class BlogApiController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
     }
+
+    // http://localhost:8080/api/articles
+    @GetMapping("/api/articles")
+    public ResponseEntity<List<ArticleResponse>> findAllArticles() {
+        List<ArticleResponse> articles = blogService.findAll()
+                .stream()
+                .map(ArticleResponse::new)
+                .toList();
+
+        return ResponseEntity.ok()
+                .body(articles);
+    }
+
+    // http://localhost:8080/api/articles/{id}
+    @GetMapping("/api/articles/{id}")
+    public ResponseEntity<ArticleResponse> findArticle(@PathVariable Long id) {
+        Article article = blogService.findById(id);
+
+        return ResponseEntity.ok()
+                .body(new ArticleResponse(article));
+    }
+
+
 
     // http://localhost:8080/sample/
     @GetMapping("sample")

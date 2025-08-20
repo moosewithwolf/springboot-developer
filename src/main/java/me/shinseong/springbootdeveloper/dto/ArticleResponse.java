@@ -1,6 +1,5 @@
 package me.shinseong.springbootdeveloper.dto;
 
-
 import lombok.Getter;
 import me.shinseong.springbootdeveloper.domain.Article;
 
