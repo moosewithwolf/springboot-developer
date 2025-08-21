@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.shinseong.springbootdeveloper.domain.Article;
 import me.shinseong.springbootdeveloper.dto.AddArticleRequest;
 import me.shinseong.springbootdeveloper.dto.ArticleResponse;
+import me.shinseong.springbootdeveloper.dto.UpdateArticleRequest;
 import me.shinseong.springbootdeveloper.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,7 +89,20 @@ public class BlogApiController {
             sb.append(map.getKey() + " : " + map.getValue() + "\n");
         });
         return sb.toString();
-
-
     }
+
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id){//void는 응답본문바디가 사용한다.
+        blogService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/articles/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable Long id,
+                                                 @RequestBody UpdateArticleRequest request){
+        Article updatedArticle = blogService.update(id, request);
+        return ResponseEntity.ok().body(updatedArticle);
+    }
+
+
 }
