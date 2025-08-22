@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
@@ -31,15 +33,21 @@ public class WebSecurityConfig {
                 .authorizeRequests() // 3 인증, 인가 설정
                 .requestMatchers("/login", "/signup", "/user").permitAll()
                 .anyRequest().authenticated()
+
                 .and()
+
                 .formLogin() // 4 폼 기반 로그인 설정
                 .loginPage("/login")
                 .defaultSuccessUrl("/articles")
+
                 .and()
+
                 .logout() // 5 로그아웃 설정
                 .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
+
                 .and()
+
                 .csrf().disable() // 6 csrf 비활성화
                 .build();
     }
