@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: "local"
+
   jpa:
     # 전송 쿼리 확인
     show-sql: true
@@ -14,7 +17,3 @@ spring:
   h2:
     console:
       enabled: true
-
-jwt:
-  issuer: issuer123@gmail.com
-  secret_key: study-springboot

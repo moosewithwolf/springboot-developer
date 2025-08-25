@@ -29,10 +29,14 @@ public class User implements UserDetails { // 스프링 시큐리티 인터페�
     @Column(name = "password")
     private String password;
 
+    @Column(name = "nickname", unique = true)
+    private String nickname;
+
     @Builder // lombok, 객체 생성시
-    public User(String email, String password, String auth) {
+    public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
     }
 
     @Override
@@ -63,6 +67,11 @@ public class User implements UserDetails { // 스프링 시큐리티 인터페�
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User update(String nickname){
+        this.nickname = nickname;
+        return this;
     }
 }
 
